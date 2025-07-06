@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Achadinhos TOP - Ofertas Imperdíveis em Produtos Selecionados</title>
+  <meta name="description" content="Confira as melhores ofertas em eletrônicos, beleza, casa e mais na Achadinhos TOP. Produtos em promoção todos os dias!"/>
+  <meta name="keywords" content="ofertas, achadinhos, promoções, eletrônicos, beleza, casa, vitrine, afiliados, achadinhostop.online" />
+  <meta name="author" content="Achadinhos TOP" />
+  <link rel="canonical" href="https://achadinhostop.online/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Achadinhos TOP" />
+  <meta property="og:title" content="Achadinhos TOP - Ofertas Imperdíveis em Produtos Selecionados" />
+  <meta property="og:description" content="Confira as melhores ofertas em eletrônicos, beleza, casa e mais na Achadinhos TOP. Produtos em promoção todos os dias!" />
+  <meta property="og:url" content="https://achadinhostop.online/" />
+  <meta property="og:image" content="https://achadinhostop.online/img/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Achadinhos TOP - Ofertas Imperdíveis em Produtos Selecionados" />
+  <meta name="twitter:description" content="Confira as melhores ofertas em eletrônicos, beleza, casa e mais na Achadinhos TOP. Produtos em promoção todos os dias!" />
+  <meta name="twitter:image" content="https://achadinhostop.online/img/og-image.jpg" />
+  <meta name="twitter:site" content="@achadinhostop" />
+  <link rel="icon" href="https://achadinhostop.online/img/favicon.ico" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #ff416c;
+      --secondary: #ff9800;
+      --success: #27ae60;
+      --bg: #f5f7fa;
+      --card-bg: #fff;
+      --text: #222;
+      --shadow: 0 6px 24px rgba(0,0,0,0.08);
+      --radius: 16px;
+      --transition: 0.25s cubic-bezier(.4,2,.6,1);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #181a1b;
+        --card-bg: #232526;
+        --text: #eee;
+        --shadow: 0 6px 24px rgba(0,0,0,0.18);
+      }
+      body { background: var(--bg); color: var(--text); }
+      .product-card { background: var(--card-bg); border-color: #222; }
+      .buy-btn { filter: brightness(1.1); }
+      .filters { background: #232526; }
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 32px 10px 18px 10px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(255,65,108,0.08);
+    }
+    header h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    header p {
+      font-size: 1.15rem;
+      opacity: 0.95;
+    }
+    .filters {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin: 24px 0 0 0;
+      padding: 10px 0;
+      background: #fff;
+      border-bottom: 1.5px solid #f0f0f0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      transition: background 0.2s;
+    }
+    .filter-btn {
+      background: #fff;
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      border-radius: 6px;
+      padding: 8px 18px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.18s, color 0.18s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--primary);
+      color: #fff;
+    }
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      padding: 32px 8px;
+      max-width: 1200px;
+      width: 100%;
+      margin: auto;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid #eee;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 420px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeInUp 0.7s forwards;
+    }
+    .product-card[data-delay] {
+      animation-delay: var(--delay);
+    }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: none; }
+    }
+    .product-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 12px 32px rgba(255,65,108,0.14);
+      z-index: 2;
+    }
+    .badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 6px;
+      z-index: 2;
+      box-shadow: 0 2px 8px rgba(255,65,108,0.12);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .badge-sale { background: var(--secondary); }
+    .badge-best { background: var(--success); }
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--radius) var(--radius) 0 0;
+      background: #f0f0f0;
+      transition: filter 0.2s;
+    }
+    .product-card:hover img {
+      filter: brightness(1.08) saturate(1.1);
+    }
+    .product-info {
+      padding: 18px 16px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .product-info h2 {
+      font-size: 1.18rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .scarcity {
+      color: #e74c3c;
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      letter-spacing: 0.2px;
+    }
+    .price {
+      color: var(--primary);
+      font-weight: bold;
+      margin-bottom: 18px;
+      font-size: 1.15rem;
+    }
+    .buy-btn {
+      background: linear-gradient(90deg, var(--secondary) 60%, var(--primary) 100%);
+      color: #fff;
+      font-weight: 700;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(255,152,0,0.08);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
+      text-decoration: none;
+      justify-content: center;
+    }
+    .buy-btn:hover {
+      transform: scale(1.06);
+      box-shadow: 0 4px 16px rgba(255,152,0,0.18);
+      filter: brightness(1.08);
+    }
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 18px 10px;
+      font-size: 0.98rem;
+      letter-spacing: 0.2px;
+      margin-top: 32px;
+    }
+    @media (max-width: 600px) {
+      header h1 { font-size: 1.5rem; }
+      .container { grid-template-columns: 1fr; padding: 18px 2px; gap: 18px; }
+      .product-card { min-height: 340px; }
+      .filters { flex-wrap: wrap; gap: 8px; font-size: 0.98rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Achadinhos TOP 🛒</h1>
+    <p>Ofertas imperdíveis todos os dias!</p>
+  </header>
+  <nav class="filters" aria-label="Categorias">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="eletronicos">Eletrônicos</button>
+    <button class="filter-btn" data-filter="beleza">Beleza</button>
+    <button class="filter-btn" data-filter="casa">Casa</button>
+  </nav>
+  <main>
+    <section class="container" id="product-list">
+      <!-- Produto 1 -->
+      <article class="product-card" data-category="eletronicos" data-delay="0.05s">
+        <div class="badge badge-sale">Oferta</div>
+        <img src="img/caf.jpg" alt="Dolce Gusto Mochaccino Em Cápsula Avelã Nescafé Caixa 170G 10 Unidades" loading="lazy" />
+        <div class="product-info">
+          <h2>Dolce Gusto Mochaccino Avelã Nescafé (10 cápsulas)</h2>
+          <div class="scarcity">🔥 Poucas unidades!</div>
+          <a href="https://www.amazon.com.br/Dolce-Mochaccino-C%C3%A1psula-Nescaf%C3%A9-Unidades/dp/B0CN1L7B18?pd_rd_w=sNELJ&content-id=amzn1.sym.550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_p=550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_r=EG0P12SNWM13S1CMQMRK&pd_rd_wg=6z1bX&pd_rd_r=d677df05-64d2-4f88-9f9b-272e3490704c&pd_rd_i=B0CN1L7B18&psc=1&linkCode=ll1&tag=pdfcerto-20&linkId=93cfba28982b0b57c127f128bdb705cb&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
+            <span>Comprar na Amazon</span>
+            <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Produto 2 -->
+      <article class="product-card" data-category="eletronicos" data-delay="0.15s">
+        <div class="badge badge-best">Mais Vendido</div>
+        <img src="img/tel.jpg" alt="Smartwatch Samsung Galaxy Fit3 Display 1.6'' Grafite" loading="lazy" />
+        <div class="product-info">
+          <h2>Smartwatch Samsung Galaxy Fit3 Display 1.6" Grafite</h2>
+          <div class="scarcity">⏰ Últimas horas!</div>
+          <a href="https://www.amazon.com.br/Smartwatch-Samsung-Galaxy-Display-Grafite/dp/B0CVCLGV1W?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=YG584FT08MPU&dib=eyJ2IjoiMSJ9.ouGHdQT8jkPgBqAvhtDFW8dQVWyr4Z_xOnApV9lCb7TlrqIr1YZp95bQHStWxwcktZcG9Xr7X4np-qvekvqjZlvPBAUNSQYCg8xh0pF4Ja4-86gupcL_I1Xa4zWmsyZE_wdIEqf382BHpyHsirHpibvthovIsjwOgqY1f3toUXjqIMh_lAMEdcv_ek9el1z-WCTZAbhbQE5u4IqlnF8yHde0iKbbbrGlYMLe0WF90TA6Oa0LqjRIlvzLb3rlbY9AIXkOG2AD9s1gVc_m8v6akQ6-MpuIqsFBo49W3-anzVA.ku11aqDllJMJsg6JhofPyZ7LyvRbHXZCU04P1dECABE&dib_tag=se&keywords=Rel%C3%B3gio%2BSmartwatch&qid=1751776339&sprefix=rel%C3%B3gio%2Bsmartwatch%2Caps%2C404&sr=8-5&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&th=1&linkCode=ll1&tag=pdfcerto-20&linkId=7d6405624be1ea5092bf7fcdfa2bc154&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
+            <span>Comprar na Amazon</span>
+            <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Produto 3 -->
+      <article class="product-card" data-category="beleza" data-delay="0.25s">
+        <div class="badge badge-sale">Oferta</div>
+        <img src="https://via.placeholder.com/300x200.webp?text=Kit+Maquiagem" alt="Kit de Maquiagem Profissional" loading="lazy" />
+        <div class="product-info">
+          <h2>Kit de Maquiagem Profissional</h2>
+          <div class="scarcity">🔥 Poucas unidades!</div>
+          <a href="manutencao.html" class="buy-btn" target="_blank">
+            <span>Ver Oferta</span>
+            <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Produto 4 -->
+      <article class="product-card" data-category="eletronicos" data-delay="0.35s">
+        <div class="badge badge-sale">Oferta</div>
+        <img src="img/fon.jpg" alt="JBL Fone de Ouvido On Ear Tune 520BT Preto" loading="lazy" />
+        <div class="product-info">
+          <h2>JBL Fone de Ouvido On Ear Tune 520BT - Preto</h2>
+          <div class="scarcity">🔥 Poucas unidades!</div>
+          <p style="font-size:0.98rem;margin-bottom:10px;">Desfrute de até 57 horas de bateria com carregamento rápido (3 horas extras com apenas 5 minutos de carga). Confortável, leve e com som JBL Pure Bass para máxima imersão no seu dia a dia.</p>
+          <a href="https://www.amazon.com.br/JBL-Fone-Ouvido-Tune-520BT/dp/B0C3V5X3QT?pd_rd_w=D5MGW&content-id=amzn1.sym.550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_p=550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_r=BJYXK1136B2P0NN33CTF&pd_rd_wg=MlWFi&pd_rd_r=d67442b1-73b7-494d-a90a-fdb38c67d74a&pd_rd_i=B0C3V5X3QT&psc=1&linkCode=ll1&tag=pdfcerto-20&linkId=a9f2f42dbdf67211c2d08196d722cc55&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
+            <span>Ver Oferta</span>
+            <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Produto 5 -->
+      <article class="product-card" data-category="eletronicos" data-delay="0.45s">
+        <div class="badge badge-sale">Oferta</div>
+        <img src="img/limp te.jpg" alt="Kit Limpa Telas 100ml Rodabrill" loading="lazy" />
+        <div class="product-info">
+          <h2>Kit Limpa Telas 100ml Rodabrill</h2>
+          <div class="scarcity">🔥 Poucas unidades!</div>
+          <p style="font-size:0.98rem;margin-bottom:10px;">Ideal para limpar telas de TVs, notebooks, celulares e monitores. Remove poeira, marcas de dedo e manchas sem agredir a superfície. Praticidade e eficiência para manter seus eletrônicos sempre limpos e com aparência de novos.</p>
+          <a href="https://www.amazon.com.br/Limpa-Telas-Rodobril-100ml-Magico/dp/B07F19X4L7?pd_rd_w=ZozfI&content-id=amzn1.sym.550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_p=550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_r=Q1MKK41EEK2R59H8E14R&pd_rd_wg=kldC2&pd_rd_r=8a07797b-9ca2-4e84-8688-e07568754231&pd_rd_i=B07F19X4L7&psc=1&linkCode=ll1&tag=pdfcerto-20&linkId=479e941c9ac3d1054a0efb18baf5bac1&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
+            <span>Ver Oferta</span>
+            <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+      <!-- Adicione mais produtos conforme necessário -->
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 <a href="https://achadinhostop.online/" style="color:#fff;text-decoration:underline;">Achadinhos TOP</a>. Todos os direitos reservados.
+  </footer>
+  <script>
+    // Filtros de categoria
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.product-card');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.getAttribute('data-filter');
+        cards.forEach(card => {
+          if (filter === 'all' || card.getAttribute('data-category') === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+    // Animação fade-in em cascata
+    document.querySelectorAll('.product-card').forEach((el, i) => {
+      el.style.setProperty('--delay', el.getAttribute('data-delay') || (i * 0.1) + 's');
+    });
+  </script>
+</body>
+</html>
