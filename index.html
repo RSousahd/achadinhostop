@@ -86,6 +86,53 @@
       z-index: -1;
     }
     
+    /* Efeito Parallax */
+    .parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -2;
+    }
+    
+    .parallax-element {
+      position: absolute;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    .parallax-element:nth-child(1) {
+      width: 100px;
+      height: 100px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    
+    .parallax-element:nth-child(2) {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+    
+    .parallax-element:nth-child(3) {
+      width: 80px;
+      height: 80px;
+      bottom: 30%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
     header {
       background: var(--glass);
       backdrop-filter: blur(20px);
@@ -133,16 +180,34 @@
       display: flex;
       gap: 16px;
       justify-content: center;
-      margin: 30px 0 0 0;
+      margin: 0;
       padding: 20px 0;
       background: var(--glass);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--glass-border);
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 10;
+      left: 0;
+      right: 0;
+      z-index: 1000;
       transition: all var(--transition);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    .filters.scrolled {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(30px);
+      -webkit-backdrop-filter: blur(30px);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    
+    @media (prefers-color-scheme: dark) {
+      .filters.scrolled {
+        background: rgba(45, 55, 72, 0.95);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
     }
     
     .filter-btn {
@@ -189,6 +254,7 @@
       flex-direction: column;
       align-items: center;
       padding: 20px 0;
+      margin-top: 80px;
     }
     
     .container {
@@ -217,6 +283,24 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       transition: all var(--transition);
+    }
+    
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(240, 147, 251, 0.1));
+      opacity: 0;
+      transition: opacity var(--transition);
+      z-index: 1;
+      pointer-events: none;
+    }
+    
+    .product-card:hover::before {
+      opacity: 1;
     }
     
     .product-card[data-delay] {
@@ -285,6 +369,58 @@
       flex-direction: column;
       flex: 1;
       gap: 12px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    .product-details {
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all var(--transition);
+      margin-top: 8px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-small);
+      border-left: 3px solid var(--primary);
+    }
+    
+    .product-card:hover .product-details {
+      opacity: 1;
+      max-height: 200px;
+      margin-top: 12px;
+    }
+    
+    .product-details h4 {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .product-details ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .product-details li {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 4px;
+      padding-left: 16px;
+      position: relative;
+    }
+    
+    .product-details li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: bold;
     }
     
     .product-info h2 {
@@ -363,22 +499,105 @@
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       color: var(--text);
-      text-align: center;
-      padding: 30px 20px;
-      font-size: 0.95rem;
-      letter-spacing: 0.3px;
+      padding: 40px 20px 20px 20px;
       margin-top: 40px;
       border-top: 1px solid var(--glass-border);
     }
     
-    footer a {
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .footer-section h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .footer-section h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--text);
+    }
+    
+    .footer-section p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 0;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      color: white;
+      text-decoration: none;
+      transition: all var(--transition);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+    }
+    
+    .social-links a:hover {
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+    }
+    
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .footer-links li {
+      margin-bottom: 8px;
+    }
+    
+    .footer-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: color var(--transition);
+      font-size: 0.95rem;
+    }
+    
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+    
+    .footer-bottom {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid var(--glass-border);
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+    
+    .footer-bottom a {
       color: var(--primary);
       text-decoration: none;
       font-weight: 600;
       transition: color var(--transition);
     }
     
-    footer a:hover {
+    .footer-bottom a:hover {
       color: var(--secondary);
     }
     
@@ -421,6 +640,20 @@
       .product-info h2 {
         font-size: 1.1rem;
       }
+      
+      main {
+        margin-top: 120px;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        text-align: center;
+      }
+      
+      .social-links {
+        justify-content: center;
+      }
     }
     
     @media (max-width: 480px) {
@@ -442,9 +675,118 @@
         font-size: 0.95rem;
       }
     }
+    
+    /* Aviso de Cookies */
+    .cookie-notice {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+      z-index: 10000;
+      transform: translateY(100%);
+      opacity: 0;
+      transition: all var(--transition);
+    }
+    
+    .cookie-notice.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    
+    .cookie-content {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .cookie-text h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    
+    .cookie-text p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+      line-height: 1.5;
+      margin: 0;
+    }
+    
+    .cookie-buttons {
+      display: flex;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    
+    .cookie-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: var(--radius-small);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    
+    .cookie-btn.accept {
+      background: linear-gradient(135deg, var(--success), #4fd1c7);
+      color: white;
+    }
+    
+    .cookie-btn.reject {
+      background: var(--glass);
+      color: var(--text);
+      border: 1px solid var(--glass-border);
+    }
+    
+    .cookie-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    
+    @media (max-width: 768px) {
+      .cookie-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+      }
+      
+      .cookie-buttons {
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Efeito Parallax -->
+  <div class="parallax-bg">
+    <div class="parallax-element"></div>
+    <div class="parallax-element"></div>
+    <div class="parallax-element"></div>
+  </div>
+  
+  <!-- Aviso de Cookies -->
+  <div id="cookie-notice" class="cookie-notice">
+    <div class="cookie-content">
+      <div class="cookie-text">
+        <h4>🍪 Política de Cookies</h4>
+        <p>Utilizamos cookies para melhorar sua experiência. Ao continuar navegando, você concorda com nossa política de privacidade.</p>
+      </div>
+      <div class="cookie-buttons">
+        <button id="accept-cookies" class="cookie-btn accept">Aceitar</button>
+        <button id="reject-cookies" class="cookie-btn reject">Recusar</button>
+      </div>
+    </div>
+  </div>
+  
   <header>
     <h1>Achadinhos TOP 🛒</h1>
     <p>Ofertas imperdíveis todos os dias!</p>
@@ -464,6 +806,15 @@
         <div class="product-info">
           <h2>Dolce Gusto Mochaccino Avelã Nescafé (10 cápsulas)</h2>
           <div class="scarcity">🔥 Poucas unidades!</div>
+          <div class="product-details">
+            <h4>✨ Características Especiais</h4>
+            <ul>
+              <li>Sabor avelã cremoso</li>
+              <li>10 cápsulas na embalagem</li>
+              <li>Compatível com máquinas Dolce Gusto</li>
+              <li>Preparo em segundos</li>
+            </ul>
+          </div>
           <a href="https://www.amazon.com.br/Dolce-Mochaccino-C%C3%A1psula-Nescaf%C3%A9-Unidades/dp/B0CN1L7B18?pd_rd_w=sNELJ&content-id=amzn1.sym.550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_p=550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_r=EG0P12SNWM13S1CMQMRK&pd_rd_wg=6z1bX&pd_rd_r=d677df05-64d2-4f88-9f9b-272e3490704c&pd_rd_i=B0CN1L7B18&psc=1&linkCode=ll1&tag=pdfcerto-20&linkId=93cfba28982b0b57c127f128bdb705cb&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
             <span>Comprar na Amazon</span>
             <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -477,6 +828,15 @@
         <div class="product-info">
           <h2>Smartwatch Samsung Galaxy Fit3 Display 1.6" Grafite</h2>
           <div class="scarcity">⏰ Últimas horas!</div>
+          <div class="product-details">
+            <h4>🚀 Funcionalidades Avançadas</h4>
+            <ul>
+              <li>Display AMOLED 1.6"</li>
+              <li>Monitoramento de sono</li>
+              <li>Resistente à água (5ATM)</li>
+              <li>Até 13 dias de bateria</li>
+            </ul>
+          </div>
           <a href="https://www.amazon.com.br/Smartwatch-Samsung-Galaxy-Display-Grafite/dp/B0CVCLGV1W?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=YG584FT08MPU&dib=eyJ2IjoiMSJ9.ouGHdQT8jkPgBqAvhtDFW8dQVWyr4Z_xOnApV9lCb7TlrqIr1YZp95bQHStWxwcktZcG9Xr7X4np-qvekvqjZlvPBAUNSQYCg8xh0pF4Ja4-86gupcL_I1Xa4zWmsyZE_wdIEqf382BHpyHsirHpibvthovIsjwOgqY1f3toUXjqIMh_lAMEdcv_ek9el1z-WCTZAbhbQE5u4IqlnF8yHde0iKbbbrGlYMLe0WF90TA6Oa0LqjRIlvzLb3rlbY9AIXkOG2AD9s1gVc_m8v6akQ6-MpuIqsFBo49W3-anzVA.ku11aqDllJMJsg6JhofPyZ7LyvRbHXZCU04P1dECABE&dib_tag=se&keywords=Rel%C3%B3gio%2BSmartwatch&qid=1751776339&sprefix=rel%C3%B3gio%2Bsmartwatch%2Caps%2C404&sr=8-5&ufe=app_do%3Aamzn1.fos.fcd6d665-32ba-4479-9f21-b774e276a678&th=1&linkCode=ll1&tag=pdfcerto-20&linkId=7d6405624be1ea5092bf7fcdfa2bc154&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
             <span>Comprar na Amazon</span>
             <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -585,8 +945,46 @@
     </section>
   </main>
   <footer>
-    &copy; 2025 <a href="https://achadinho.netlify.app" style="color:#fff;text-decoration:underline;">Achadinhos TOP</a>. Todos os direitos reservados.
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Achadinhos TOP</h3>
+        <p>As melhores ofertas em um só lugar! 🛒</p>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Siga-nos</h4>
+        <div class="social-links">
+          <a href="https://www.tiktok.com/@bigriossuporte?lang=pt-BR" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.64V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+            </svg>
+          </a>
+          <a href="https://www.instagram.com/achadinhostop795/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h4>Links Úteis</h4>
+        <ul class="footer-links">
+          <li><a href="#product-list">Produtos</a></li>
+          <li><a href="https://achadinho.netlify.app">Site Principal</a></li>
+          <li><a href="#top">Voltar ao Topo</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 <a href="https://achadinho.netlify.app">Achadinhos TOP</a>. Todos os direitos reservados.</p>
+    </div>
   </footer>
+  <!-- Botão Voltar ao Topo -->
+  <button id="backToTop" aria-label="Voltar ao topo">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
   <script>
     // Filtros de categoria
     const filterBtns = document.querySelectorAll('.filter-btn');
@@ -609,6 +1007,95 @@
     document.querySelectorAll('.product-card').forEach((el, i) => {
       el.style.setProperty('--delay', el.getAttribute('data-delay') || (i * 0.1) + 's');
     });
+    // Botão Voltar ao Topo
+    const backToTop = document.getElementById('backToTop');
+    const filters = document.querySelector('.filters');
+    
+    window.addEventListener('scroll', () => {
+      // Botão voltar ao topo
+      if (window.scrollY > 300) {
+        backToTop.style.opacity = '1';
+        backToTop.style.pointerEvents = 'auto';
+      } else {
+        backToTop.style.opacity = '0';
+        backToTop.style.pointerEvents = 'none';
+      }
+      
+      // Menu fixo com efeito de scroll
+      if (window.scrollY > 50) {
+        filters.classList.add('scrolled');
+      } else {
+        filters.classList.remove('scrolled');
+      }
+    });
+    
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    // Aviso de Cookies
+    const cookieNotice = document.getElementById('cookie-notice');
+    const acceptCookies = document.getElementById('accept-cookies');
+    const rejectCookies = document.getElementById('reject-cookies');
+    
+    // Verificar se já aceitou os cookies
+    if (!localStorage.getItem('cookiesAccepted')) {
+      setTimeout(() => {
+        cookieNotice.classList.add('show');
+      }, 2000);
+    }
+    
+    acceptCookies.addEventListener('click', () => {
+      localStorage.setItem('cookiesAccepted', 'true');
+      cookieNotice.classList.remove('show');
+    });
+    
+    rejectCookies.addEventListener('click', () => {
+      localStorage.setItem('cookiesAccepted', 'false');
+      cookieNotice.classList.remove('show');
+    });
   </script>
+  <style>
+    #backToTop {
+      position: fixed;
+      right: 32px;
+      bottom: 32px;
+      z-index: 100;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 54px;
+      height: 54px;
+      box-shadow: 0 8px 24px rgba(102,126,234,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, background 0.2s, transform 0.2s;
+    }
+    #backToTop:hover {
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      transform: scale(1.08) translateY(-4px);
+      box-shadow: 0 12px 32px rgba(102,126,234,0.28);
+    }
+    #backToTop svg {
+      display: block;
+      margin: auto;
+      color: #fff;
+    }
+    @media (max-width: 600px) {
+      #backToTop {
+        right: 16px;
+        bottom: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
 </body>
 </html>
