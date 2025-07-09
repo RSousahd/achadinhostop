@@ -22,221 +22,425 @@
   <link rel="icon" href="https://achadinhostop.online/img/favicon.ico" type="image/x-icon" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #ff416c;
-      --secondary: #ff9800;
-      --success: #27ae60;
-      --bg: #f5f7fa;
-      --card-bg: #fff;
-      --text: #222;
-      --shadow: 0 6px 24px rgba(0,0,0,0.08);
-      --radius: 16px;
-      --transition: 0.25s cubic-bezier(.4,2,.6,1);
+      --primary: #667eea;
+      --primary-dark: #5a6fd8;
+      --secondary: #f093fb;
+      --accent: #ff6b6b;
+      --success: #4ecdc4;
+      --warning: #ffd93d;
+      --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text: #2d3748;
+      --text-light: #718096;
+      --shadow: 0 20px 40px rgba(0,0,0,0.1);
+      --shadow-hover: 0 30px 60px rgba(0,0,0,0.15);
+      --radius: 20px;
+      --radius-small: 12px;
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --glass: rgba(255, 255, 255, 0.25);
+      --glass-border: rgba(255, 255, 255, 0.18);
     }
+    
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #181a1b;
-        --card-bg: #232526;
-        --text: #eee;
-        --shadow: 0 6px 24px rgba(0,0,0,0.18);
+        --bg: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+        --card-bg: rgba(45, 55, 72, 0.95);
+        --text: #f7fafc;
+        --text-light: #a0aec0;
+        --shadow: 0 20px 40px rgba(0,0,0,0.3);
+        --shadow-hover: 0 30px 60px rgba(0,0,0,0.4);
       }
-      body { background: var(--bg); color: var(--text); }
-      .product-card { background: var(--card-bg); border-color: #222; }
-      .buy-btn { filter: brightness(1.1); }
-      .filters { background: #232526; }
     }
+    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
+      font-family: 'Poppins', sans-serif;
     }
+    
     body {
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
     }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+      z-index: -1;
+    }
+    
     header {
-      background: var(--primary);
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
       color: white;
-      padding: 32px 10px 18px 10px;
+      padding: 40px 20px 30px 20px;
       text-align: center;
-      box-shadow: 0 2px 12px rgba(255,65,108,0.08);
+      position: relative;
+      overflow: hidden;
     }
+    
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      opacity: 0.9;
+      z-index: -1;
+    }
+    
     header h1 {
-      font-size: 2.3rem;
+      font-size: 3rem;
       font-weight: 800;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+      background: linear-gradient(45deg, #fff, #f0f0f0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
+    
     header p {
-      font-size: 1.15rem;
-      opacity: 0.95;
+      font-size: 1.2rem;
+      opacity: 0.9;
+      font-weight: 300;
+      letter-spacing: 0.5px;
     }
+    
     .filters {
       display: flex;
-      gap: 12px;
+      gap: 16px;
       justify-content: center;
-      margin: 24px 0 0 0;
-      padding: 10px 0;
-      background: #fff;
-      border-bottom: 1.5px solid #f0f0f0;
+      margin: 30px 0 0 0;
+      padding: 20px 0;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
       position: sticky;
       top: 0;
       z-index: 10;
-      transition: background 0.2s;
+      transition: all var(--transition);
     }
+    
     .filter-btn {
-      background: #fff;
-      border: 1.5px solid var(--primary);
-      color: var(--primary);
-      border-radius: 6px;
-      padding: 8px 18px;
-      font-weight: 600;
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      color: var(--text);
+      border-radius: var(--radius-small);
+      padding: 12px 24px;
+      font-weight: 500;
       cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.18s, color 0.18s;
+      font-size: 0.95rem;
+      transition: all var(--transition);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
     }
+    
+    .filter-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .filter-btn:hover::before {
+      left: 100%;
+    }
+    
     .filter-btn.active, .filter-btn:hover {
-      background: var(--primary);
-      color: #fff;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
     }
+    
     main {
       flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 20px 0;
     }
+    
     .container {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 28px;
-      padding: 32px 8px;
-      max-width: 1200px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      padding: 40px 20px;
+      max-width: 1400px;
       width: 100%;
       margin: auto;
     }
+    
     .product-card {
       background: var(--card-bg);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      border: 1px solid #eee;
+      border: 1px solid var(--glass-border);
       position: relative;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      min-height: 420px;
+      min-height: 450px;
       opacity: 0;
       transform: translateY(30px);
-      animation: fadeInUp 0.7s forwards;
+      animation: fadeInUp 0.8s forwards;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: all var(--transition);
     }
+    
     .product-card[data-delay] {
       animation-delay: var(--delay);
     }
+    
     @keyframes fadeInUp {
-      to { opacity: 1; transform: none; }
+      to { 
+        opacity: 1; 
+        transform: none; 
+      }
     }
+    
     .product-card:hover {
-      transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 12px 32px rgba(255,65,108,0.14);
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: var(--shadow-hover);
       z-index: 2;
     }
+    
     .badge {
       position: absolute;
-      top: 18px;
-      left: 18px;
-      background: var(--primary);
-      color: #fff;
-      font-size: 0.95rem;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 6px;
+      top: 20px;
+      left: 20px;
+      background: linear-gradient(135deg, var(--accent), #ff8a80);
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--radius-small);
       z-index: 2;
-      box-shadow: 0 2px 8px rgba(255,65,108,0.12);
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
       letter-spacing: 0.5px;
       text-transform: uppercase;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
-    .badge-sale { background: var(--secondary); }
-    .badge-best { background: var(--success); }
+    
+    .badge-sale { 
+      background: linear-gradient(135deg, var(--warning), #ffb347); 
+      box-shadow: 0 4px 15px rgba(255, 217, 61, 0.3);
+    }
+    
+    .badge-best { 
+      background: linear-gradient(135deg, var(--success), #4fd1c7); 
+      box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+    }
+    
     .product-card img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
       border-radius: var(--radius) var(--radius) 0 0;
-      background: #f0f0f0;
-      transition: filter 0.2s;
+      background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+      transition: all var(--transition);
+      position: relative;
     }
+    
     .product-card:hover img {
-      filter: brightness(1.08) saturate(1.1);
+      filter: brightness(1.05) saturate(1.1);
+      transform: scale(1.05);
     }
+    
     .product-info {
-      padding: 18px 16px 16px 16px;
+      padding: 24px 20px 20px 20px;
       display: flex;
       flex-direction: column;
       flex: 1;
+      gap: 12px;
     }
+    
     .product-info h2 {
-      font-size: 1.18rem;
+      font-size: 1.25rem;
       margin-bottom: 8px;
-      font-weight: 700;
+      font-weight: 600;
       color: var(--text);
+      line-height: 1.4;
     }
+    
     .scarcity {
-      color: #e74c3c;
+      color: var(--accent);
       font-weight: 600;
       margin-bottom: 8px;
-      font-size: 1rem;
+      font-size: 0.95rem;
       display: flex;
       align-items: center;
-      gap: 4px;
-      letter-spacing: 0.2px;
+      gap: 6px;
+      letter-spacing: 0.3px;
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
+      padding: 8px 12px;
+      border-radius: var(--radius-small);
+      border-left: 3px solid var(--accent);
     }
-    .price {
-      color: var(--primary);
-      font-weight: bold;
-      margin-bottom: 18px;
-      font-size: 1.15rem;
+    
+    .product-info p {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 16px;
     }
+    
     .buy-btn {
-      background: linear-gradient(90deg, var(--secondary) 60%, var(--primary) 100%);
-      color: #fff;
-      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      font-weight: 600;
       border: none;
-      padding: 14px 28px;
-      border-radius: 8px;
-      font-size: 1.1rem;
+      padding: 16px 32px;
+      border-radius: var(--radius-small);
+      font-size: 1rem;
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(255,152,0,0.08);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
       display: flex;
       align-items: center;
-      gap: 8px;
-      transition: transform 0.18s, box-shadow 0.18s, filter 0.18s;
+      gap: 10px;
+      transition: all var(--transition);
       text-decoration: none;
       justify-content: center;
+      position: relative;
+      overflow: hidden;
+      margin-top: auto;
     }
+    
+    .buy-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    .buy-btn:hover::before {
+      left: 100%;
+    }
+    
     .buy-btn:hover {
-      transform: scale(1.06);
-      box-shadow: 0 4px 16px rgba(255,152,0,0.18);
-      filter: brightness(1.08);
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+      filter: brightness(1.1);
     }
+    
     footer {
-      background: #333;
-      color: white;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: var(--text);
       text-align: center;
-      padding: 18px 10px;
-      font-size: 0.98rem;
-      letter-spacing: 0.2px;
-      margin-top: 32px;
+      padding: 30px 20px;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      margin-top: 40px;
+      border-top: 1px solid var(--glass-border);
     }
-    @media (max-width: 600px) {
-      header h1 { font-size: 1.5rem; }
-      .container { grid-template-columns: 1fr; padding: 18px 2px; gap: 18px; }
-      .product-card { min-height: 340px; }
-      .filters { flex-wrap: wrap; gap: 8px; font-size: 0.98rem; }
+    
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color var(--transition);
+    }
+    
+    footer a:hover {
+      color: var(--secondary);
+    }
+    
+    @media (max-width: 768px) {
+      header h1 { 
+        font-size: 2rem; 
+        letter-spacing: -0.5px;
+      }
+      
+      header p {
+        font-size: 1rem;
+      }
+      
+      .container { 
+        grid-template-columns: 1fr; 
+        padding: 20px 15px; 
+        gap: 25px; 
+      }
+      
+      .product-card { 
+        min-height: 400px; 
+      }
+      
+      .filters { 
+        flex-wrap: wrap; 
+        gap: 12px; 
+        font-size: 0.9rem;
+        padding: 15px 10px;
+      }
+      
+      .filter-btn {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+      }
+      
+      .product-info {
+        padding: 20px 16px 16px 16px;
+      }
+      
+      .product-info h2 {
+        font-size: 1.1rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      header h1 { 
+        font-size: 1.8rem; 
+      }
+      
+      .container { 
+        padding: 15px 10px; 
+        gap: 20px; 
+      }
+      
+      .product-card { 
+        min-height: 380px; 
+      }
+      
+      .buy-btn {
+        padding: 14px 24px;
+        font-size: 0.95rem;
+      }
     }
   </style>
 </head>
@@ -286,7 +490,7 @@
         <div class="product-info">
           <h2>Protetor Solar em Bastão com Cor - Proteção UV</h2>
           <div class="scarcity">🔥 Poucas unidades!</div>
-          <p style="font-size:0.98rem;margin-bottom:10px;">Protetor solar em bastão com cor, ideal para proteção diária e uniformização da pele. Prático para levar na bolsa e aplicar em qualquer lugar.</p>
+          <p>Protetor solar em bastão com cor, ideal para proteção diária e uniformização da pele. Prático para levar na bolsa e aplicar em qualquer lugar.</p>
           <a href="https://www.amazon.com.br/Protetor-solar-bast%C3%A3o-com-cor/dp/B09MW8PG6B?th=1&linkCode=ll1&tag=pdfcerto-20&linkId=5afeca53d0a406a9b80a0f96aac57b4a&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
             <span>Comprar na Amazon</span>
             <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -300,7 +504,7 @@
         <div class="product-info">
           <h2>JBL Fone de Ouvido On Ear Tune 520BT - Preto</h2>
           <div class="scarcity">🔥 Poucas unidades!</div>
-          <p style="font-size:0.98rem;margin-bottom:10px;">Desfrute de até 57 horas de bateria com carregamento rápido (3 horas extras com apenas 5 minutos de carga). Confortável, leve e com som JBL Pure Bass para máxima imersão no seu dia a dia.</p>
+          <p>Desfrute de até 57 horas de bateria com carregamento rápido (3 horas extras com apenas 5 minutos de carga). Confortável, leve e com som JBL Pure Bass para máxima imersão no seu dia a dia.</p>
           <a href="https://www.amazon.com.br/JBL-Fone-Ouvido-Tune-520BT/dp/B0C3V5X3QT?pd_rd_w=D5MGW&content-id=amzn1.sym.550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_p=550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_r=BJYXK1136B2P0NN33CTF&pd_rd_wg=MlWFi&pd_rd_r=d67442b1-73b7-494d-a90a-fdb38c67d74a&pd_rd_i=B0C3V5X3QT&psc=1&linkCode=ll1&tag=pdfcerto-20&linkId=a9f2f42dbdf67211c2d08196d722cc55&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
             <span>Ver Oferta</span>
             <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -314,7 +518,7 @@
         <div class="product-info">
           <h2>Kit Limpa Telas 100ml Rodabrill</h2>
           <div class="scarcity">🔥 Poucas unidades!</div>
-          <p style="font-size:0.98rem;margin-bottom:10px;">Ideal para limpar telas de TVs, notebooks, celulares e monitores. Remove poeira, marcas de dedo e manchas sem agredir a superfície. Praticidade e eficiência para manter seus eletrônicos sempre limpos e com aparência de novos.</p>
+          <p>Ideal para limpar telas de TVs, notebooks, celulares e monitores. Remove poeira, marcas de dedo e manchas sem agredir a superfície. Praticidade e eficiência para manter seus eletrônicos sempre limpos e com aparência de novos.</p>
           <a href="https://www.amazon.com.br/Limpa-Telas-Rodobril-100ml-Magico/dp/B07F19X4L7?pd_rd_w=ZozfI&content-id=amzn1.sym.550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_p=550666bb-9d24-483d-bc9e-4a297db376ce&pf_rd_r=Q1MKK41EEK2R59H8E14R&pd_rd_wg=kldC2&pd_rd_r=8a07797b-9ca2-4e84-8688-e07568754231&pd_rd_i=B07F19X4L7&psc=1&linkCode=ll1&tag=pdfcerto-20&linkId=479e941c9ac3d1054a0efb18baf5bac1&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
             <span>Ver Oferta</span>
             <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -328,7 +532,7 @@
         <div class="product-info">
           <h2>NINJA LIQUIDIFICADOR 3 em 1, 1200W, 10 Funções, Smoothies, Processador</h2>
           <div class="scarcity">🚀 Oferta especial!</div>
-          <p style="font-size:0.98rem;margin-bottom:10px;">Liquidificador potente 3 em 1: processador, smoothies e mais. 1200W, 10 funções automáticas, ideal para receitas rápidas e saudáveis.</p>
+          <p>Liquidificador potente 3 em 1: processador, smoothies e mais. 1200W, 10 funções automáticas, ideal para receitas rápidas e saudáveis.</p>
           <a href="https://www.amazon.com.br/NINJA-LIQUIDIFICADOR-Func%C3%A7o%CC%83es-Smoothies-Processador/dp/B0DWBCG2M9?_encoding=UTF8&pd_rd_w=c558r&content-id=amzn1.sym.8e4d82e3-67d8-4ee1-add4-950ff2dc6154%3Aamzn1.symc.a68f4ca3-28dc-4388-a2cf-24672c480d8f&pf_rd_p=8e4d82e3-67d8-4ee1-add4-950ff2dc6154&pf_rd_r=WHFA31WZ13FWJ6XFHJHV&pd_rd_wg=xNLpc&pd_rd_r=bfdd30d1-a76e-411f-a57f-e45602dccd80&linkCode=ll1&tag=pdfcerto-20&linkId=9697215869f03a91083a64aadb4d3149&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
             <span>Comprar:</span>
             <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -342,7 +546,7 @@
         <div class="product-info">
           <h2>Ninja Creami Sorveteira 127v - Máquina de sobremesa geladas</h2>
           <div class="scarcity">🍦 Novidade!</div>
-          <p style="font-size:0.98rem;margin-bottom:10px;">Prepare gelatos, milkshakes, sorvetes e tigelas de smoothie em casa com facilidade. Prática, potente e muito bem avaliada!</p>
+          <p>Prepare gelatos, milkshakes, sorvetes e tigelas de smoothie em casa com facilidade. Prática, potente e muito bem avaliada!</p>
           <a href="https://www.amazon.com.br/Ninja-Creami-Sorveteira-127v-Milkshakes/dp/B0DHSWL7D6?pd_rd_w=XCdR7&content-id=amzn1.sym.aea8925d-d867-4387-a483-0657283885c9&pf_rd_p=aea8925d-d867-4387-a483-0657283885c9&pf_rd_r=3Q017ACRT3EE8A42B8B3&pd_rd_wg=ydFeS&pd_rd_r=e82cfa8e-7226-42ce-8efa-70621671af9b&pd_rd_i=B0DHSWL7D6&th=1&linkCode=ll1&tag=pdfcerto-20&linkId=6f5529ffd3e45f7f6a9c1b800dd11970&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
             <span>Comprar</span>
             <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -356,7 +560,7 @@
         <div class="product-info">
           <h2>Ninja Sizzle Smokeless Indoor Grill - Churrasqueira Elétrica</h2>
           <div class="scarcity">🔥 Oferta especial!</div>
-          <p style="font-size:0.98rem;margin-bottom:10px;">Churrasqueira elétrica sem fumaça para uso interno. Prepare carnes, legumes e muito mais com facilidade e sem bagunça. Perfeita para apartamentos!</p>
+          <p>Churrasqueira elétrica sem fumaça para uso interno. Prepare carnes, legumes e muito mais com facilidade e sem bagunça. Perfeita para apartamentos!</p>
           <a href="https://www.amazon.com.br/Ninja-Sizzle-Smokeless-Indoor-Grill/dp/B0DHSXG5DF?pd_rd_w=M2ymt&content-id=amzn1.sym.a6bf656f-dec5-4bf8-a331-f2631d86c1a8&pf_rd_p=a6bf656f-dec5-4bf8-a331-f2631d86c1a8&pf_rd_r=3GWMNKRQ2YSQM6DP8G7V&pd_rd_wg=Nx1vn&pd_rd_r=af7eb1b6-9df9-4634-ade1-ce6be9ea2a93&pd_rd_i=B0DHSXG5DF&psc=1&linkCode=ll1&tag=pdfcerto-20&linkId=27a281eddc1170ee70c7ff85aaae401c&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
             <span>Comprar na Amazon</span>
             <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -370,7 +574,7 @@
         <div class="product-info">
           <h2>3VS Nutrition Pré Treino Prohibido 360g - Suplemento</h2>
           <div class="scarcity">💪 Oferta especial!</div>
-          <p style="font-size:0.98rem;margin-bottom:10px;">Pré-treino de alta qualidade para maximizar seu desempenho nos treinos. Sabor cítrico, 360g de pura energia e foco para seus objetivos fitness.</p>
+          <p>Pré-treino de alta qualidade para maximizar seu desempenho nos treinos. Sabor cítrico, 360g de pura energia e foco para seus objetivos fitness.</p>
           <a href="https://www.amazon.com.br/Prohibido-Treino-360g-Nutrition-Citrus/dp/B07RWF543K?pf_rd_r=0B09957H3QWA0HZ587EH&pf_rd_p=df6150ec-7b44-47d5-88b6-f3da9e6955eb&th=1&linkCode=ll1&tag=pdfcerto-20&linkId=ca594cce20a3f1fc4e8a6c265e29125d&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
             <span>Comprar na Amazon</span>
             <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
