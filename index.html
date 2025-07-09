@@ -178,74 +178,45 @@
     
     .filters {
       display: flex;
-      gap: 16px;
+      gap: 0;
       justify-content: center;
       margin: 0;
-      padding: 20px 0;
-      background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--glass-border);
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 1000;
-      transition: all var(--transition);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    }
-    
-    .filters.scrolled {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(30px);
-      -webkit-backdrop-filter: blur(30px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
-    
-    @media (prefers-color-scheme: dark) {
-      .filters.scrolled {
-        background: rgba(45, 55, 72, 0.95);
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-      }
+      padding: 0;
+      background: linear-gradient(135deg, #232f3e 0%, #37475a 100%);
+      border-bottom: 1px solid #131921;
+      position: relative;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     
     .filter-btn {
-      background: var(--glass);
-      border: 1px solid var(--glass-border);
-      color: var(--text);
-      border-radius: var(--radius-small);
-      padding: 12px 24px;
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      padding: 16px 24px;
       font-weight: 500;
       cursor: pointer;
       font-size: 0.95rem;
-      transition: all var(--transition);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      transition: all 0.2s ease;
       position: relative;
-      overflow: hidden;
+      border-right: 1px solid #3a4553;
+      min-width: 120px;
+      text-align: center;
     }
     
-    .filter-btn::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-      transition: left 0.5s;
+    .filter-btn:last-child {
+      border-right: none;
     }
     
-    .filter-btn:hover::before {
-      left: 100%;
+    .filter-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ff9900;
     }
     
-    .filter-btn.active, .filter-btn:hover {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    .filter-btn.active {
+      background: rgba(255, 255, 255, 0.15);
+      color: #ff9900;
+      font-weight: 600;
     }
     
     main {
@@ -254,7 +225,7 @@
       flex-direction: column;
       align-items: center;
       padding: 20px 0;
-      margin-top: 80px;
+      margin-top: 0;
     }
     
     .container {
@@ -623,14 +594,16 @@
       
       .filters { 
         flex-wrap: wrap; 
-        gap: 12px; 
+        gap: 0; 
         font-size: 0.9rem;
-        padding: 15px 10px;
+        padding: 0;
       }
       
       .filter-btn {
-        padding: 10px 18px;
-        font-size: 0.9rem;
+        padding: 12px 16px;
+        font-size: 0.85rem;
+        min-width: auto;
+        flex: 1;
       }
       
       .product-info {
@@ -642,7 +615,7 @@
       }
       
       main {
-        margin-top: 120px;
+        margin-top: 0;
       }
       
       .footer-content {
@@ -941,6 +914,28 @@
           </a>
         </div>
       </article>
+      <!-- Produto 10: Pó Compacto Marchetti FPS 30 -->
+      <article class="product-card" data-category="beleza" data-delay="0.95s">
+        <div class="badge badge-sale">Oferta</div>
+        <img src="img/71mR5Hc0mIL._AC_SL1500_.jpg" alt="Pó Compacto FPS 30 Marchetti Bege" loading="lazy" />
+        <div class="product-info">
+          <h2>Pó Compacto FPS 30 01, Marchetti, Bege</h2>
+          <div class="scarcity">✨ Mais de 50 compras no mês!</div>
+          <div class="product-details">
+            <h4>💄 Características Especiais</h4>
+            <ul>
+              <li>Proteção solar FPS 30</li>
+              <li>Cor bege natural</li>
+              <li>4,2 de 5 estrelas (165 avaliações)</li>
+              <li>Ideal para retoques durante o dia</li>
+            </ul>
+          </div>
+          <a href="https://www.amazon.com.br/Compacto-FPS-01-Marchetti-Bege/dp/B07CCJZK7P?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=1VHV3LSOYUX5L&dib=eyJ2IjoiMSJ9.i8Zf3E7TjeMr4ZWcTsOhLrQs3SFwWCiN7mj7kd_aVjBIahcjjVVUNqltPK7Z79Ah3cQ4x30SdkBjU15qbiPbFbXB1oud_1EoXvig1WP6WtpG84Dpb9w9gM5xomEjwZt0F7BpEVZsg87OU-aQts-IS-g3W_BqJU7N17GZtWPC5FxC3ULD1EPvtX6cJvu8RGGaKw_COejP65NCiWlJ-w5-8bfsDbN65PyiKzfJkuik2g6mIivkzHFx-zorgH3l6tJU4nVDyOonC4frj-YPIH0iu5Oe0VgAkqljWz5-B-p4o58.XuI-DczV6GJPg6OuJHgYya_LAm9pnBYm_ydakzxFafI&dib_tag=se&keywords=P%C3%B3%2BCompacto%2BFPS%2B30%2B01%2C%2BMarchetti%2C%2BBege&qid=1752096357&sprefix=p%C3%B3%2Bcompacto%2Bfps%2B30%2B01%2Bmarchetti%2Bbege%2Caps%2C421&sr=8-1&th=1&linkCode=ll1&tag=pdfcerto-20&linkId=09472a92646ee74c98920279cb6ed044&language=pt_BR&ref_=as_li_ss_tl" class="buy-btn" target="_blank" rel="noopener noreferrer">
+            <span>Comprar na Amazon</span>
+            <svg width="22" height="22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 11h8m0 0-3.5-3.5M15 11l-3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
       <!-- Adicione mais produtos conforme necessário -->
     </section>
   </main>
@@ -1019,13 +1014,6 @@
       } else {
         backToTop.style.opacity = '0';
         backToTop.style.pointerEvents = 'none';
-      }
-      
-      // Menu fixo com efeito de scroll
-      if (window.scrollY > 50) {
-        filters.classList.add('scrolled');
-      } else {
-        filters.classList.remove('scrolled');
       }
     });
     
